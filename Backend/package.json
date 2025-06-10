@@ -1,4 +1,10 @@
 {
+  
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for the Node.js application",
+  "main": "server.js",
+
   "dependencies": {
     "bcrypt": "^6.0.0",
     "dotenv": "^16.5.0",

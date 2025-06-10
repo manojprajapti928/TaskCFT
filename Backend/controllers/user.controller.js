@@ -26,6 +26,37 @@ const registerUser = async(req,res)=>{
         const token = jwt.sign ({userId:newUser.UserId} , process.env.JWT_SECRET, {
             expiresIn: '1h'
         });
+
+         // Send welcome email
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        });
+
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: 'Welcome to Our Website!',
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background-color: #f1f1f1; border-radius: 10px;">
+                    <h2 style="color: #333;">Welcome, ${firstName}!</h2>
+                    <p style="font-size: 16px; color: #555;">
+                        Thank you for registering at <strong>Manoj It Solution Pvt Ltd</strong>. Your account has been successfully created!
+                    </p>
+                    <p style="font-size: 14px; color: #777;">
+                        You can now log in and start using our services.
+                    </p>
+                    <hr style="margin: 20px 0; border: none; border-top: 1px solid #ddd;">
+                    <p style="font-size: 12px; color: #aaa; text-align: center;">
+                        &copy; ${new Date().getFullYear()} Manoj It Solution Pvt Ltd. All rights reserved.
+                    </p>
+                </div>
+            `
+        });
+
         res.status(201).json({
             message: 'User registered successfully',
             user: {

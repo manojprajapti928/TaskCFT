@@ -6,6 +6,17 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
     dialect: 'mysql',
     port: process.env.DB_PORT,
     logging: false, 
+    pool: {
+    max: 3,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  },
+  dialectOptions: {
+    connectTimeout: 30000,
+    acquireTimeout: 30000,
+    timeout: 30000,
+  }
 
     
 

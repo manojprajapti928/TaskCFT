@@ -22,6 +22,7 @@ const registerUser = async(req,res)=>{
             email,
             password: hashedPassword
         });
+        console.log(newUser);
 
         const token = jwt.sign ({userId:newUser.UserId} , process.env.JWT_SECRET, {
             expiresIn: '1h'

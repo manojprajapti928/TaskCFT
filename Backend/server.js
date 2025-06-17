@@ -9,6 +9,7 @@ const userRoutes = require('./routes/userRoutes');
 
 
 
+
 const app = express();
 
 
@@ -26,6 +27,10 @@ sequelize.sync()
     })
     .catch((error) => {
         console.error('Error synchronizing database:', error);
+    });
+
+    app.get('/', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'reset-password.html'));
     });
 
 
